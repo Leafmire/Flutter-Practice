@@ -1,3 +1,13 @@
+import 'dart:io';
+
+import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:preference_list/preference_list.dart';
+import 'package:screen_capturer/screen_capturer.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -65,6 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
     case (1):
       page = FavoritePage();
       break;
+    case (2):
+      page = CaptureWindowPage();
+      break;
     default:
       throw UnimplementedError('No page for index $selectedIndex');
     }
@@ -84,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     NavigationRailDestination(
                       icon: Icon(Icons.favorite),
                       label: Text('Favorites'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.camera),
+                      label: Text('Camera'),
                     ),
                   ],
                   selectedIndex: selectedIndex,
@@ -175,6 +192,26 @@ class FavoritePage extends StatelessWidget {
             title: Text(pair.asLowerCase),
         ),
       ],
+    );
+  }
+}
+
+class CaptureWindowPage extends StatefulWidget {
+  @override
+  State<CaptureWindowPage> createState() => _CaptureWindowPageState();
+}
+
+class _CaptureWindowPageState extends State<CaptureWindowPage> {
+  bool _isAccessAllowed = false;
+  bool _copyToClipboard = false;
+
+  CapturedData? _lastCapturedData;
+  Uint8List? _imageBytesFromClipboard;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Capture Window'),
     );
   }
 }
